@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build: ../stock-web
+    image: stock/web
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3100:80"
+    links:
+      - backend
+
+  backend:
+    build: ./
+    image: stock/api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/stock

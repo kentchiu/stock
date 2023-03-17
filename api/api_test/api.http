@@ -1,0 +1,72 @@
+### List portfolios
+GET http://localhost:8000/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,META
+###
+GET http://localhost:8000/quotes?symbols=MSFT
+
+### List portfolios - real time
+GET http://localhost:8000/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,FB&realTime=true
+
+### unrealized profit
+GET http://localhost:8000/profits/unrealized
+
+###  unrealized profit
+GET http://localhost:8000/profits/unrealized?symbols=QS,META,AAPL,TSLA,INTC,VOO,DIS,GOOG,MSFT,AMZN,NVDA,AMD,BRK-B,JNJ,BABA,QQQ,TSM&realTime=true
+
+###  unrealized profit
+GET http://localhost:8000/profits/unrealized?symbols=AAPL&realTime=true
+
+
+### realize profit
+GET http://localhost:8000/profits/realized
+
+### list trades
+GET http://localhost:8000/trades
+
+### Download Quotes
+POST http://localhost:8000/portfolios/
+Content-Type: application/json
+
+{
+  "tickers": ["QS", "FB","AAPL",  "TSLA", "INTC", "VOO", "GOOG", "AMZN", "NVDA", "TSM", "AMD", "DIS", "BRK-B", "MA", "JNJ"]
+}
+
+
+
+### list trades
+GET http://localhost:8888/trades
+
+### list trades - merged
+GET http://localhost:8888/trades?merged=true
+
+### add trade
+POST http://localhost:8888/trades
+Content-Type: application/json
+
+{
+  "symbol": "AAPL",
+  "tradeDate": "2022-09-06"
+}
+
+
+### list quotes
+GET http://localhost:8888/quotes
+
+
+
+### update quotes
+PATCH http://localhost:8888/quotes/AAPL
+Content-Type: application/json
+
+{}
+
+
+### list stocks
+GET http://localhost:8888/stocks
+
+
+### import stocks
+POST http://localhost:8888/stocks
+
+Content-Type: application/json
+
+{}

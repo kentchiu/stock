@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "stock-api"
+version = "0.1.0"
+description = "fetch real time US quote from yahoo finance"
+authors = ["kent <kent.cwg@gmail.com>"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = true
+python_version = 3.10
+strict = true
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^1.4.1"
+yfinance = "^0.1.81"
+mypy = "^0.982"
+fastapi = "^0.85.1"
+# By adding the standard, Uvicorn will install and use some recommended extra dependencies.
+uvicorn = { extras = ["standard"], version = "^0.18.3" }
+python-dotenv = "^0.21.0"
+SQLAlchemy = "^1.4.42"
+types-requests = "^2.28.11.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.0"
+black = {version = "^22.8.0", allow-prereleases = true}
+isort = "^5.10.1"
+autoflake = "^1.6.1"
+
+[tool.pytest.ini_options]
+markers = [
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "serial",
+  "yf: marks tests will call yfinance",
+]
+
+plugins = [
+  "pydantic.mypy"
+]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
