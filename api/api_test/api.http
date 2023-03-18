@@ -1,29 +1,29 @@
 ### List portfolios
-GET http://localhost:8000/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,META
+GET http://localhost:6666/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,META
 ###
-GET http://localhost:8000/quotes?symbols=MSFT
+GET http://localhost:6666/quotes?symbols=MSFT
 
 ### List portfolios - real time
-GET http://localhost:8000/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,FB&realTime=true
+GET http://localhost:6666/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,FB&realTime=true
 
 ### unrealized profit
-GET http://localhost:8000/profits/unrealized
+GET http://localhost:6666/profits/unrealized
 
 ###  unrealized profit
-GET http://localhost:8000/profits/unrealized?symbols=QS,META,AAPL,TSLA,INTC,VOO,DIS,GOOG,MSFT,AMZN,NVDA,AMD,BRK-B,JNJ,BABA,QQQ,TSM&realTime=true
+GET http://localhost:6666/profits/unrealized?symbols=QS,META,AAPL,TSLA,INTC,VOO,DIS,GOOG,MSFT,AMZN,NVDA,AMD,BRK-B,JNJ,BABA,QQQ,TSM&realTime=true
 
 ###  unrealized profit
-GET http://localhost:8000/profits/unrealized?symbols=AAPL&realTime=true
+GET http://localhost:6666/profits/unrealized?symbols=AAPL&realTime=true
 
 
 ### realize profit
-GET http://localhost:8000/profits/realized
+GET http://localhost:6666/profits/realized
 
 ### list trades
-GET http://localhost:8000/trades
+GET http://localhost:6666/trades
 
 ### Download Quotes
-POST http://localhost:8000/portfolios/
+POST http://localhost:6666/portfolios/
 Content-Type: application/json
 
 {
