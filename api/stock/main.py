@@ -14,9 +14,10 @@ from stock.routers import gain, quote, stock, trade
 from stock.utils.app_exceptions import AppException, app_exception_handler
 
 ## db logger
-logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+db_logger = logging.getLogger("sqlalchemy.engine")
+logging.getLogger("sqlalchemy.engine").setLevel(logging.DEBUG)
 ## system logger
-fastapi_logger.setLevel(logging.WARN)
+fastapi_logger.setLevel(logging.DEBUG)
 
 # stock app loggers
 app_logger = logging.getLogger("stock")
@@ -49,7 +50,7 @@ async def root() -> dict:
 
 @app.get("/health")
 def health() -> dict:
-    # __debug_logger()
+    __debug_logger()
 
     return {"name": "Stock API", "version": "0.0.1"}
 
@@ -68,11 +69,17 @@ def __debug_logger():
     fastapi_logger.error("FASTAPI error message")
     fastapi_logger.critical("FASTAPI critical message")
 
-    app_logger.debug("DEBUG_LOGGER debug message")
-    app_logger.info("DEBUG_LOGGER info message")
-    app_logger.warning("DEBUG_LOGGER warning message")
-    app_logger.error("DEBUG_LOGGER error message")
-    app_logger.critical("DEBUG_LOGGER critical message")
+    app_logger.debug("APP_LOGGER debug message")
+    app_logger.info("APP_LOGGER info message")
+    app_logger.warning("APP_LOGGER warning message")
+    app_logger.error("APP_LOGGER error message")
+    app_logger.critical("APP_LOGGER critical message")
+
+    db_logger.debug("DB_LOGGER debug message")
+    db_logger.info("DB_LOGGER info message")
+    db_logger.warning("DB_LOGGER warning message")
+    db_logger.error("DB_LOGGER error message")
+    db_logger.critical("DB_LOGGER critical message")
     print("logger end <-------")
 
 

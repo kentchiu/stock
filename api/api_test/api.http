@@ -1,45 +1,66 @@
-### List portfolios
-GET http://localhost:6666/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,META
 ###
-GET http://localhost:6666/quotes?symbols=MSFT
+### Test in swaggers
+### http://localhost:9999/docs
+### 
+
+
+###
+### Quotes
+### 
+
+
+### List portfolios
+GET http://localhost:9999/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,META
+###
+GET http://localhost:9999/quotes?symbols=MSFT
 
 ### List portfolios - real time
-GET http://localhost:6666/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,FB&realTime=true
+GET http://localhost:9999/quotes?symbols=QS,AAPL,TSLA,VOO,GOOG,DIS,FB&realTime=true
+
+### list quotes
+GET http://localhost:9999/quotes
+
+### update quotes
+PATCH http://localhost:9999/quotes/AAPL
+Content-Type: application/json
+
+{}
+
+
+###
+### Profites
+### 
 
 ### unrealized profit
-GET http://localhost:6666/profits/unrealized
+GET http://localhost:9999/profits/unrealized
 
 ###  unrealized profit
-GET http://localhost:6666/profits/unrealized?symbols=QS,META,AAPL,TSLA,INTC,VOO,DIS,GOOG,MSFT,AMZN,NVDA,AMD,BRK-B,JNJ,BABA,QQQ,TSM&realTime=true
+GET http://localhost:9999/profits/unrealized?symbols=QS,META,AAPL,TSLA,INTC,VOO,DIS,GOOG,MSFT,AMZN,NVDA,AMD,BRK-B,JNJ,BABA,QQQ,TSM&realTime=true
 
 ###  unrealized profit
-GET http://localhost:6666/profits/unrealized?symbols=AAPL&realTime=true
+GET http://localhost:9999/profits/unrealized?symbols=AAPL&realTime=true
 
 
 ### realize profit
-GET http://localhost:6666/profits/realized
+GET http://localhost:9999/profits/realized
 
-### list trades
-GET http://localhost:6666/trades
 
-### Download Quotes
-POST http://localhost:6666/portfolios/
-Content-Type: application/json
-
-{
-  "tickers": ["QS", "FB","AAPL",  "TSLA", "INTC", "VOO", "GOOG", "AMZN", "NVDA", "TSM", "AMD", "DIS", "BRK-B", "MA", "JNJ"]
-}
-
+###
+### Trades
+### 
 
 
 ### list trades
-GET http://localhost:8888/trades
+GET http://localhost:9999/trades
+
+### list trades
+GET http://localhost:9999/trades
 
 ### list trades - merged
-GET http://localhost:8888/trades?merged=true
+GET http://localhost:9999/trades?merged=true
 
 ### add trade
-POST http://localhost:8888/trades
+POST http://localhost:9999/trades
 Content-Type: application/json
 
 {
@@ -47,26 +68,43 @@ Content-Type: application/json
   "tradeDate": "2022-09-06"
 }
 
-
-### list quotes
-GET http://localhost:8888/quotes
-
-
-
-### update quotes
-PATCH http://localhost:8888/quotes/AAPL
+### urdate tradre
+PATCH http://localhost:9999/trades/13
 Content-Type: application/json
 
-{}
+{
+  "symbol": "AAPL",
+  "price": 160.25,
+  "quoteDate": "2023-03-24",
+  "marketValue": 160.25,
+  "dailyGain": 1.32000732421875,
+  "dailyGainPercent": 0.8305589788276011,
+  "totalGain": 0,
+  "totalGainPercent": 0,
+  "tradeId": 13,
+  "tradeDate": "2023-03-12",
+  "cost": 160.25,
+  "shares": 1,
+  "note": null,
+  "take": 0
+}
 
+###
+### Others
+### 
 
-### list stocks
-GET http://localhost:8888/stocks
-
-
-### import stocks
-POST http://localhost:8888/stocks
-
+### Download Quotes
+POST http://localhost:9999/portfolios/
 Content-Type: application/json
 
-{}
+{
+  "tickers": ["QS", "FB","AAPL",  "TSLA", "INTC", "VOO", "GOOG", "AMZN", "NVDA", "TSM", "AMD", "DIS", "BRK-B", "MA", "JNJ"]
+}
+
+### end point
+GET http://localhost:9999
+
+
+### end health
+GET http://localhost:9999/health
+

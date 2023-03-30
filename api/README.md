@@ -18,9 +18,6 @@ uvicorn stock.main:app --reload --port 8888
 ```bash
 pytest
 
-# test all file unser tests folder
-pytest tests 
-
 # test by marker expression (skip mark in this case)
 pytest  -m skip 
 
@@ -36,10 +33,11 @@ pytest tests/test_main.py::test_profits_unrealized  -s -v
 
 ```bash
 # test all under current folder
+
 poetry run pytest
 
 # test all file under tests folder
-poetry run pytest tests
+run pytest tests
 
 # test by marker expression (skip mark in this case)
 poetry run pytest -m skip

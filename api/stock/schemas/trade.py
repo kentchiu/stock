@@ -16,6 +16,7 @@ class TradeUpdate(MyBaseModel):
     cost: float | None = None
     relative_trade_id: int | None = None
     take: float | None = None
+    trade_date: date | None = None
 
 
 class TradeInDB(MyBaseModel):

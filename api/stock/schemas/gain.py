@@ -6,7 +6,7 @@ from stock.schemas.trade import TradeInDB
 
 
 class Gain(MyBaseModel):
-    """損益
+    """全部損益
     - symbol: 股票名稱
     - date: 日期
     - cost: 均價
@@ -60,7 +60,7 @@ class Gain(MyBaseModel):
 
 
 class SymbolGain(MyBaseModel):
-    """損益
+    """個股損益
     - symbol: 股票名稱
     - date: 日期
     - cost: 價格

@@ -6,7 +6,7 @@ PWD := $(shell pwd)
 
 dev:
 	. .venv/bin/activate && \
-	uvicorn stock.main:app --reload --port 6666 
+	uvicorn stock.main:app --reload --port 9999 
 
 format:
 	. .venv/bin/activate && \
@@ -26,7 +26,7 @@ test-debug:
 
 test1:
 	. .venv/bin/activate && \
-	python -m pytest -v -s --log-cli-level=DEBUG tests/routers/test_trade.py
+	python -m pytest -v -s --log-cli-level=DEBUG tests/utils/test_app_exceptions.py
 
 query:
 	sqlite3 -header -column data/app.db 'select * from trade'

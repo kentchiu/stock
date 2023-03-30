@@ -76,7 +76,6 @@ export const TradeTable = ({ symbol }: { symbol: string }) => {
               </React.Fragment>
             );
           })}
-          <TradeNewRecord />
         </tbody>
       </table>
     );
@@ -94,6 +93,9 @@ const TradeRecord = ({
   const tradeGain = useRecoilValue(findTradeGainByTradeId(tradeId!));
   const hidden = close;
   const [shares, setShares] = useState(tradeGain?.shares);
+  const [date, setDate] = useState(tradeGain?.tradeDate);
+  const [cost, setCost] = useState(tradeGain?.cost);
+  const [note, setNote] = useState(tradeGain?.note);
   const symbols = useRecoilValue(symbolsState);
 
   const updateTradeCallback = useRecoilCallback(
@@ -132,6 +134,37 @@ const TradeRecord = ({
     updateTradeCallback(tg);
   };
 
+  const handleDateChange = async (
+    event: ChangeEvent<HTMLInputElement>,
+    tradeGain: TradeGain
+  ) => {
+    const date = event.target.value;
+    setDate(date);
+    const tg: TradeGain = { ...tradeGain, tradeDate: date };
+    updateTradeCallback(tg);
+  };
+
+  const handleCostChange = async (
+    event: ChangeEvent<HTMLInputElement>,
+    tradeGain: TradeGain
+  ) => {
+    const cost = parseFloat(event.target.value);
+    setCost(cost);
+    const tg: TradeGain = { ...tradeGain, cost: cost };
+    updateTradeCallback(tg);
+  };
+
+
+  const handleNoteChange = async (
+    event: ChangeEvent<HTMLInputElement>,
+    tradeGain: TradeGain
+  ) => {
+    const note = event.target.value;
+    setNote(note);
+    const tg: TradeGain = { ...tradeGain, note: note };
+    updateTradeCallback(tg);
+  };
+
   if (!tradeGain) {
     return <></>;
   } else {
@@ -142,8 +175,8 @@ const TradeRecord = ({
             <input
               type="date"
               className="p-0 text-sm border-slate-300 w-32"
-              value={tradeGain.tradeDate}
-              readOnly
+              value={date}
+              onChange={(e) => handleDateChange(e, tradeGain)}
             />
           </td>
           <td>
@@ -158,8 +191,8 @@ const TradeRecord = ({
             <input
               type="number"
               className="p-0 text-sm border-slate-300 w-24 text-right"
-              value={decimalFormat.format(tradeGain.cost)}
-              readOnly
+              value={decimalFormat.format(cost ?? 0)}
+              onChange={(e) => handleCostChange(e, tradeGain)}
             />
           </td>
           <td className="text-center">
@@ -210,8 +243,8 @@ const TradeRecord = ({
             <input
               type="text"
               className="p-0 text-sm border-slate-300 w-80"
-              value={tradeGain.note ?? ""}
-              readOnly
+              value={note ?? ""}
+              onChange={(e) => handleNoteChange(e, tradeGain)}
             />
           </td>
           <td>
@@ -226,80 +259,3 @@ const TradeRecord = ({
   }
 };
 
-const TradeNewRecord = ({ quoteId }: { quoteId?: number }) => {
-  const marketValue = 0;
-  const dailyGainPercent = 0;
-  const rate = 1.1;
-  const hidden = true;
-  const totalGain = 0;
-  const totalGainPercent = 0;
-  const dailyGain = 0;
-
-  return (
-    <>
-      <tr>
-        <td className="pl-2">
-          <input type="date" className="p-0 text-sm border-slate-300 w-32" />
-        </td>
-        <td>
-          <input
-            type="number"
-            className="p-0 text-sm border-slate-300 w-24 text-right"
-          />
-        </td>
-        <td>
-          <input
-            type="number"
-            className="p-0 text-sm border-slate-300 w-24 text-right"
-          />
-        </td>
-        <td className="text-center">
-          <ColorNumber num={marketValue} colorful={false} sign={false} />
-        </td>
-        <td className="text-center">
-          <div>
-            <div className="font-bold">
-              <ColorNumber
-                num={dailyGainPercent}
-                percent
-                hidden={true}
-              ></ColorNumber>
-            </div>
-            <div>
-              <ColorNumber
-                num={dailyGain}
-                rate={rate}
-                hidden={hidden}
-              ></ColorNumber>
-            </div>
-          </div>
-        </td>
-        <td className="text-center">
-          <div>
-            <div className="font-bold">
-              <ColorNumber
-                num={totalGainPercent}
-                percent
-                hidden={hidden}
-              ></ColorNumber>
-            </div>
-            <div>
-              <ColorNumber
-                num={totalGain}
-                rate={rate}
-                hidden={hidden}
-              ></ColorNumber>
-            </div>
-          </div>
-        </td>
-        <td className="text-center">-</td>
-        <td>
-          <input type="text" className="p-0 text-sm border-slate-300 w-80" />
-        </td>
-        <td>
-          <TrashIcon className="w-6 h-6 hover:text-red-600 inline-block"></TrashIcon>
-        </td>
-      </tr>
-    </>
-  );
-};
