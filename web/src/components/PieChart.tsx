@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
+import { decimalFormat } from "../utils/util";
 
 export type Data = {
   value: number;
@@ -24,8 +25,8 @@ export const PieChart = (props: IProps) => {
         const svg = d3.select(d3Container.current);
 
         // set the dimensions and margins of the graph
-        const width = 450;
-        const height = 450;
+        const width = 250;
+        const height = 250;
         const margin = 5;
 
         // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -37,68 +38,40 @@ export const PieChart = (props: IProps) => {
           .append("g")
           .attr("transform", `translate(${width / 2},${height / 2})`);
 
-        const colors = {
-          AAPL: "#636363",
-          TSLA: "#c30100",
-          QS: "#2e8292",
-          META: "#027df2",
-          INTC: "#048fce",
-          VOO: "#c80024",
-        };
-
         const data: any = props.data!;
 
         const pie = d3.pie().value((d: any) => d.value);
         // shape helper to build arcs:
-        const arcGenerator = d3
-          .arc()
-          .innerRadius(radius - 100)
-          .outerRadius(radius);
+        const arcGenerator = d3.arc().innerRadius(0).outerRadius(radius);
 
+        // path
         g.selectAll("slices")
           .data(pie(data))
           .join("path")
           .attr("d", arcGenerator as any)
-          .attr("fill", function (d, i) {
+          .attr("fill", function(d, i) {
             const data: any = d.data;
-            type ObjectKey = keyof typeof colors;
-            const symbol = data.symbol as ObjectKey;
-            return colors[symbol];
+            return d3.schemeSet1[i];
           })
-          .attr("stroke", "white")
-          .style("stroke-width", "3px");
-        // .style("opacity", 0.7);
+          .style("opacity", 0.7);
 
+        // text
         g.selectAll("slices")
           .data(pie(data))
           .join("text")
-          .text((d: any, i: number, x) => {
-            return d.data.symbol;
+          .text((d: any, i: number) => {
+            const angle = d.endAngle - d.startAngle;
+            if (angle === 0) {
+              console.log("ignore", d.data.symbol);
+            } else {
+              return d.data.symbol + `(${decimalFormat.format(d.data.value)})`;
+            }
           })
-          .attr("transform", function (d: any) {
+          .attr("transform", function(d: any) {
             return `translate(${arcGenerator.centroid(d)})`;
           })
           .style("text-anchor", "middle")
-          .style("font-size", 16);
-
-        //  const polyline =  g.selectAll("polyline")
-        //  .data(pie(data), (d:any) => d.data.symbol);
-
-        //  polyline
-        //  .join("polyline")
-        //  .attr("stroke", "black")
-        //  .attr("stroke-width", "2px")
-        //  .attr("fill", "none");
-
-        g.append("text")
-          .text(`1`)
-          .attr("text-anchor", "middle")
-          .attr("dy", "-1.2em");
-
-        g.append("text")
-          .text(`222`)
-          .attr("text-anchor", "middle")
-          .attr("dy", ".6em");
+          .style("font-size", 10);
       }
     },
 
@@ -112,5 +85,9 @@ export const PieChart = (props: IProps) => {
     [props.data, d3Container.current]
   );
 
-  return <svg ref={d3Container} />;
+  if (props.data?.length === 0) {
+    return <div className="w-[250px] h-[250px] flex justify-center items-center">0</div>
+  } else {
+    return <svg ref={d3Container} />;
+  }
 };

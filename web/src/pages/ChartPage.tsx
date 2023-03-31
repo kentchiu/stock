@@ -2,13 +2,14 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { DonutChart, DonutChartData } from "../components/DonutChart";
+import { DonutChartData } from "../components/DonutChart";
+import { PieChart } from "../components/PieChart";
 import { useCurrencyRate } from "../hooks";
 import { symbolGainsState } from "../recoil/atoms";
 import ErrorBoundary from "../utils/ErrorBoundry";
-import { decimalFormat } from "../utils/util";
 
 export const ChartPage = () => {
+  console.log("ChartPage", new Date());
   return (
     <>
       <div>
@@ -82,26 +83,8 @@ const DailyGain = () => {
 
   return (
     <>
-      <div>
-        <DonutChart
-          data={dailyProfits}
-          title={`Daily Profit`}
-          subTitle={decimalFormat.format(dailyProfitSum)}
-          width={400}
-          height={400}
-          rate={rate}
-        ></DonutChart>
-      </div>
-      <div>
-        <DonutChart
-          data={dailyLosses}
-          title={`Daily Loss`}
-          subTitle={decimalFormat.format(dailyLossSum)}
-          width={400}
-          height={400}
-          rate={rate}
-        ></DonutChart>
-      </div>
+      <PieChart data={dailyProfits}></PieChart>
+      <PieChart data={dailyLosses}></PieChart>
     </>
   );
 };
@@ -154,36 +137,9 @@ const TotalGain = () => {
       : marketValues.map((v) => v.value).reduce((p, c) => p + c) * rate;
   return (
     <>
-      <div>
-        <DonutChart
-          data={totalProfits}
-          title={`Total Profit`}
-          subTitle={decimalFormat.format(totalProfitSum)}
-          width={400}
-          height={400}
-          rate={rate}
-        ></DonutChart>
-      </div>
-      <div>
-        <DonutChart
-          data={totalLosses}
-          title={`Total Loss`}
-          subTitle={decimalFormat.format(totalLossSum)}
-          width={400}
-          height={400}
-          rate={rate}
-        ></DonutChart>
-      </div>
-      <div>
-        <DonutChart
-          data={marketValues}
-          title="Market Value"
-          subTitle={decimalFormat.format(markValueSum)}
-          width={400}
-          height={400}
-          rate={rate}
-        ></DonutChart>
-      </div>
+      <PieChart data={totalProfits}></PieChart>
+      <PieChart data={totalLosses}></PieChart>
+      <PieChart data={marketValues}></PieChart>
     </>
   );
 };

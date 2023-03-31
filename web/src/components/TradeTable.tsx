@@ -154,7 +154,6 @@ const TradeRecord = ({
     updateTradeCallback(tg);
   };
 
-
   const handleNoteChange = async (
     event: ChangeEvent<HTMLInputElement>,
     tradeGain: TradeGain
@@ -258,4 +257,3 @@ const TradeRecord = ({
     );
   }
 };
-
