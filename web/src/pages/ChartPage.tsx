@@ -2,8 +2,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { DonutChartData } from "../components/DonutChart";
-import { PieChart } from "../components/PieChart";
+import { PieChart, PieData } from "../components/PieChart";
 import { useCurrencyRate } from "../hooks";
 import { symbolGainsState } from "../recoil/atoms";
 import ErrorBoundary from "../utils/ErrorBoundry";
@@ -55,7 +54,7 @@ const DailyGain = () => {
   const dailyProfits = gains
     .filter((g) => g.dailyGain > 0)
     .map((val) => {
-      const result: DonutChartData = {
+      const result: PieData = {
         symbol: val.symbol!,
         value: val.dailyGain,
       };
@@ -70,7 +69,7 @@ const DailyGain = () => {
   const dailyLosses = gains
     .filter((g) => g.dailyGain < 0)
     .map((val) => {
-      const result: DonutChartData = {
+      const result: PieData = {
         symbol: val.symbol!,
         value: -val.dailyGain,
       };
@@ -96,7 +95,7 @@ const TotalGain = () => {
   const totalProfits = gains
     .filter((g) => g.totalGain > 0)
     .map((val) => {
-      const result: DonutChartData = {
+      const result: PieData = {
         symbol: val.symbol!,
         value: val.totalGain,
       };
@@ -111,7 +110,7 @@ const TotalGain = () => {
   const totalLosses = gains
     .filter((g) => g.totalGain < 0)
     .map((val) => {
-      const result: DonutChartData = {
+      const result: PieData = {
         symbol: val.symbol!,
         value: -val.totalGain,
       };
@@ -124,7 +123,7 @@ const TotalGain = () => {
       : totalLosses.map((v) => v.value).reduce((p, c) => p + c) * rate;
 
   const marketValues = gains.map((val) => {
-    const result: DonutChartData = {
+    const result: PieData = {
       symbol: val.symbol!,
       value: val.marketValue,
     };

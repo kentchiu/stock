@@ -2,13 +2,13 @@ import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 import { decimalFormat } from "../utils/util";
 
-export type Data = {
+export type PieData = {
   value: number;
   symbol?: string;
 };
 
 interface IProps {
-  data?: Data[];
+  data?: PieData[];
 }
 
 export const PieChart = (props: IProps) => {
@@ -49,10 +49,11 @@ export const PieChart = (props: IProps) => {
           .data(pie(data))
           .join("path")
           .attr("d", arcGenerator as any)
-          .attr("fill", function(d, i) {
+          .attr("fill", function (d, i) {
             const data: any = d.data;
             return d3.schemeSet1[i];
           })
+          .style("stroke", "white")
           .style("opacity", 0.7);
 
         // text
@@ -61,15 +62,17 @@ export const PieChart = (props: IProps) => {
           .join("text")
           .text((d: any, i: number) => {
             const angle = d.endAngle - d.startAngle;
-            if (angle === 0) {
+            if (angle < 0.2) {
               console.log("ignore", d.data.symbol);
+              return "";
             } else {
               return d.data.symbol + `(${decimalFormat.format(d.data.value)})`;
             }
           })
-          .attr("transform", function(d: any) {
+          .attr("transform", function (d: any) {
             return `translate(${arcGenerator.centroid(d)})`;
           })
+          .style("stroke", "white")
           .style("text-anchor", "middle")
           .style("font-size", 10);
       }
@@ -86,7 +89,11 @@ export const PieChart = (props: IProps) => {
   );
 
   if (props.data?.length === 0) {
-    return <div className="w-[250px] h-[250px] flex justify-center items-center">0</div>
+    return (
+      <div className="w-[250px] h-[250px] flex justify-center items-center">
+        0
+      </div>
+    );
   } else {
     return <svg ref={d3Container} />;
   }
