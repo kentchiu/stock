@@ -14,7 +14,6 @@ def test_list_gains():
 def test_list_gains_with_symbols():
     resp = client.get("/gains?symbols=AAPL,TSLA")
     json = resp.json()
-    print(json)
     assert json[0]["symbol"] is not None
     assert json[0]["quoteDate"] is not None
     assert json[0]["price"] is not None

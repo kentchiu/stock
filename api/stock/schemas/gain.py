@@ -6,7 +6,7 @@ from stock.schemas.trade import TradeInDB
 
 
 class Gain(MyBaseModel):
-    """全部損益
+    """損益
     - symbol: 股票名稱
     - date: 日期
     - cost: 均價
@@ -31,7 +31,6 @@ class Gain(MyBaseModel):
     cost: float = 0
     shares: float = 0
     note: str | None = None
-    take: float = 0
 
     def __init__(self, quote: QuoteRealTime, trade: TradeInDB | None = None, **kwargs):
         super().__init__(**kwargs)
@@ -43,20 +42,17 @@ class Gain(MyBaseModel):
             self.trade_date = trade.trade_date
             self.cost = trade.cost
             self.shares = trade.shares
-            self.take = trade.take or 0
             self.note = trade.note
-            unrealized_shares = trade.shares - self.take
-            if unrealized_shares > 0:
-                self.market_value = quote.close * unrealized_shares
-                self.daily_gain = quote.change * unrealized_shares
-                self.daily_gain_percent = quote.change_percent
-                self.total_gain = (quote.close - trade.cost) * unrealized_shares
-                try:
-                    self.total_gain_percent = (
-                        (quote.close - trade.cost) / trade.cost
-                    ) * 100
-                except:
-                    self.total_gain_percent = 0
+            self.market_value = quote.close * trade.shares
+            self.daily_gain = quote.change * trade.shares
+            self.daily_gain_percent = quote.change_percent
+            self.total_gain = (quote.close - trade.cost) * trade.shares
+            try:
+                self.total_gain_percent = (
+                    (quote.close - trade.cost) / trade.cost
+                ) * 100
+            except:
+                self.total_gain_percent = 0
 
 
 class SymbolGain(MyBaseModel):
@@ -96,19 +92,15 @@ class SymbolGain(MyBaseModel):
 
         self.trades = [Gain(quote=quote, trade=trade) for trade in trades]
 
-        unrealized_trades = [
-            Gain(quote=quote, trade=trade)
-            for trade in trades
-            if (trade.shares - (trade.take or 0) > 0)
-        ]
-
-        if len(unrealized_trades) > 0:
-            total_shares = sum(
-                [trade.shares - trade.take for trade in unrealized_trades]
-            )
-            avg_cost = (
-                sum([trade.cost * trade.shares for trade in trades]) / total_shares
-            )
+        if len(self.trades) > 0:
+            total_shares = sum([trade.shares for trade in self.trades])
+            try:
+                avg_cost = (
+                    sum([trade.cost * trade.shares for trade in trades]) / total_shares
+                )
+            except:
+                print("!!!Error!!!")
+                avg_cost = 0
 
             self.cost = avg_cost
             self.shares = total_shares
