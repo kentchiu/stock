@@ -45,36 +45,60 @@ export const PieChart = (props: IProps) => {
         // shape helper to build arcs:
         const arcGenerator = d3.arc().innerRadius(0).outerRadius(radius);
 
-        // path
-        g.selectAll("slices")
-          .data(pie(data))
-          .join("path")
-          .attr("d", arcGenerator as any)
-          .attr("fill", function(d, i) {
-            const data: any = d.data;
-            return d3.schemeSet1[i];
-          })
-          .style("stroke", "white")
-          .style("opacity", 0.7);
+        if (data.length > 0) {
+          // path
+          g.selectAll("slices")
+            .data(pie(data))
+            .join("path")
+            .attr("d", arcGenerator as any)
+            .attr("fill", function (d, i) {
+              const data: any = d.data;
+              return d3.schemeSet1[i];
+            })
+            .style("stroke", "white")
+            .style("opacity", 0.7);
 
-        // text
-        g.selectAll("slices")
-          .data(pie(data))
-          .join("text")
-          .text((d: any, i: number) => {
-            const angle = d.endAngle - d.startAngle;
-            if (angle < 0.2) {
-              return '';
-            } else {
-              return d.data.symbol + `(${decimalFormat.format(d.data.value)})`;
-            }
-          })
-          .attr("transform", function(d: any) {
-            return `translate(${arcGenerator.centroid(d)})`;
-          })
-          .style("stroke", "white")
-          .style("text-anchor", "middle")
-          .style("font-size", 10);
+          // text
+          g.selectAll("slices")
+            .data(pie(data))
+            .join("text")
+            .text((d: any, i: number) => {
+              const angle = d.endAngle - d.startAngle;
+              if (angle < 0.2) {
+                return "";
+              } else {
+                return (
+                  d.data.symbol + `(${decimalFormat.format(d.data.value)})`
+                );
+              }
+            })
+            .attr("transform", function (d: any) {
+              return `translate(${arcGenerator.centroid(d)})`;
+            })
+            .style("stroke", "white")
+            .style("text-anchor", "middle")
+            .style("font-size", 10);
+        } else {
+          const pieData = pie([{ symbol: "", value: 1 }]);
+          g.selectAll("slices")
+            .data(pieData)
+            .join("path")
+            .attr("d", arcGenerator as any)
+            .attr("fill", function (d, i) {
+              const data: any = d.data;
+              return "lightgray";
+            })
+            .style("stroke", "white")
+            .style("opacity", 0.7);
+
+          g.selectAll("slices")
+            .data(pieData)
+            .join("text")
+            .text("0")
+            .style("stroke", "white")
+            .style("text-anchor", "middle")
+            .style("font-size", 30);
+        }
       }
     },
 

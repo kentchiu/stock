@@ -2,7 +2,6 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { DonutChartData } from "../components/DonutChart";
 import { PieChart, PieData } from "../components/PieChart";
 import { useCurrencyRate } from "../hooks";
 import { symbolGainsState } from "../recoil/atoms";
