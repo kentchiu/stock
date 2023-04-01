@@ -9,6 +9,7 @@ export type PieData = {
 
 interface IProps {
   data?: PieData[];
+  title?: string;
 }
 
 export const PieChart = (props: IProps) => {
@@ -49,7 +50,7 @@ export const PieChart = (props: IProps) => {
           .data(pie(data))
           .join("path")
           .attr("d", arcGenerator as any)
-          .attr("fill", function (d, i) {
+          .attr("fill", function(d, i) {
             const data: any = d.data;
             return d3.schemeSet1[i];
           })
@@ -63,13 +64,12 @@ export const PieChart = (props: IProps) => {
           .text((d: any, i: number) => {
             const angle = d.endAngle - d.startAngle;
             if (angle < 0.2) {
-              console.log("ignore", d.data.symbol);
-              return "";
+              return '';
             } else {
               return d.data.symbol + `(${decimalFormat.format(d.data.value)})`;
             }
           })
-          .attr("transform", function (d: any) {
+          .attr("transform", function(d: any) {
             return `translate(${arcGenerator.centroid(d)})`;
           })
           .style("stroke", "white")
@@ -88,13 +88,20 @@ export const PieChart = (props: IProps) => {
     [props.data, d3Container.current]
   );
 
-  if (props.data?.length === 0) {
-    return (
-      <div className="w-[250px] h-[250px] flex justify-center items-center">
-        0
+  // if (props.data?.length === 0) {
+  //   return <div className="w-[250px] h-[250px] flex justify-center items-center">0</div>
+  // } else {
+  //   return <svg ref={d3Container} />;
+  // }
+  //
+  //
+
+  return (
+    <>
+      <div className="flex-col items-center content-center">
+        <h1 className="text-center">{props.title}</h1>
+        <svg ref={d3Container} />
       </div>
-    );
-  } else {
-    return <svg ref={d3Container} />;
-  }
+    </>
+  );
 };

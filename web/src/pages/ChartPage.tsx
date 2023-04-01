@@ -2,6 +2,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { DonutChartData } from "../components/DonutChart";
 import { PieChart, PieData } from "../components/PieChart";
 import { useCurrencyRate } from "../hooks";
 import { symbolGainsState } from "../recoil/atoms";
@@ -82,8 +83,8 @@ const DailyGain = () => {
 
   return (
     <>
-      <PieChart data={dailyProfits}></PieChart>
-      <PieChart data={dailyLosses}></PieChart>
+      <PieChart data={dailyProfits} title="Daily Profits"></PieChart>
+      <PieChart data={dailyLosses} title="Daily Losses"></PieChart>
     </>
   );
 };
@@ -136,9 +137,9 @@ const TotalGain = () => {
       : marketValues.map((v) => v.value).reduce((p, c) => p + c) * rate;
   return (
     <>
-      <PieChart data={totalProfits}></PieChart>
-      <PieChart data={totalLosses}></PieChart>
-      <PieChart data={marketValues}></PieChart>
+      <PieChart data={totalProfits} title="Totoal Profits"></PieChart>
+      <PieChart data={totalLosses} title="Total Losses"></PieChart>
+      <PieChart data={marketValues} title="MarketValues"></PieChart>
     </>
   );
 };
