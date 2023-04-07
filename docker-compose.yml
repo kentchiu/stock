@@ -1,6 +1,6 @@
 services:
   frontend:
-    build: ../stock-web
+    build: ./web
     image: stock/web
     restart: always
     depends_on:
@@ -11,7 +11,7 @@ services:
       - backend
 
   backend:
-    build: ./
+    build: ./api
     image: stock/api
     restart: always
     ports:
