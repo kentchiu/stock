@@ -4,6 +4,10 @@
 
 [main](./doc/main.png)
 
+[chart1](./doc/chart1.png)
+
+[chart2](./doc/chart1.png)
+
 ## Quick Start
 
 build 
@@ -22,6 +26,7 @@ docker compose up -d
 ## Development
 
 Backend 
+
 
 
 ```bash

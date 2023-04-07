@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { Pie } from "d3";
 import { useEffect, useRef } from "react";
 import { decimalFormat } from "../utils/util";
 
@@ -79,7 +80,7 @@ export const PieChart = (props: IProps) => {
             .style("text-anchor", "middle")
             .style("font-size", 10);
         } else {
-          const pieData = pie([{ symbol: "", value: 1 }]);
+          const pieData = pie([0]);
           g.selectAll("slices")
             .data(pieData)
             .join("path")
