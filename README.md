@@ -4,11 +4,11 @@ This is an app designed for US stock investors, providing the latest market quot
 
 
 
-[main](./doc/main.png)
+![main](./doc/main.png)
 
-[chart1](./doc/chart1.png)
+![chart1](./doc/chart1.png)
 
-[chart2](./doc/chart1.png)
+![chart2](./doc/chart1.png)
 
 
 
