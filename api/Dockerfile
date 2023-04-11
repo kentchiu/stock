@@ -7,7 +7,8 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN $HOME/.local/bin/poetry config virtualenvs.create false 
 
 WORKDIR /app
-COPY ./data/app.db /app/data/app.db 
+#COPY ./data/app.db /app/data/app.db 
+RUN  mkdir /app/data
 COPY ./pyproject.toml /app/pyproject.toml
 COPY ./stock /app/stock
 

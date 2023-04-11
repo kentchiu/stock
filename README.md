@@ -65,3 +65,13 @@ cd web
 npm install
 npm run dev
 ```
+
+## Database
+
+export 
+
+```bash
+sqlite3 api/data/app.db ".dump" > output.sql 
+```
+
+
